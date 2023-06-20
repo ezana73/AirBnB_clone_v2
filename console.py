@@ -134,6 +134,7 @@ class HBNBCommand(cmd.Cmd):
                     arg_splitted[1] = int(arg_splitted[1])
                 kw[arg_splitted[0]] = arg_splitted[1]
             new_instance = HBNBCommand.classes[cls_name](**kw)
+            storage.new(new_instance)
             new_instance.save()
             print(new_instance.id)
         except SyntaxError:
