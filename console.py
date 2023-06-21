@@ -134,7 +134,6 @@ class HBNBCommand(cmd.Cmd):
                     arg_splitted[1] = int(arg_splitted[1])
                 kw[arg_splitted[0]] = arg_splitted[1]
             new_instance = HBNBCommand.classes[cls_name](**kw)
-            storage.new(new_instance)
             new_instance.save()
             print(new_instance.id)
         except SyntaxError:
@@ -221,7 +220,7 @@ class HBNBCommand(cmd.Cmd):
 
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
-            objects = storage.all()
+            objects = storage.all(args)
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
