@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, DateTime
+from os import getenv
 
 Base = declarative_base()
 
@@ -61,4 +62,11 @@ class BaseModel:
         dictionary.update(self.__dict__)
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
-        return dictionary
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            return dictionary
+        else:
+            dictionary['created_at'] = self.created_at.isoformat()
+            dictionary['updated_at'] = self.updated_at.isoformat()
+            return dictionary
+        
+    
