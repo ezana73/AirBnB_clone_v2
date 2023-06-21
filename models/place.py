@@ -6,6 +6,8 @@ from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from models.review import Review
 from os import getenv
+import models
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
