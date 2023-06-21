@@ -60,6 +60,6 @@ class BaseModel:
         """Convert instance into dict format"""
         dictionary = {}
         dictionary.update(self.__dict__)
-        if dictionary['_sa_instance_state']:
+        if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
         return dictionary
