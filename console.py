@@ -226,11 +226,11 @@ class HBNBCommand(cmd.Cmd):
                 return
             for k in objects:
                 if k.split('.')[0] == args:
-                    print_list.append(objects[k]())
+                    print_list.append(objects[k].__str__())
         else:
             objects = storage.all()
             for k in objects:
-                print_list.append(objects[k]())
+                print_list.append(objects[k].__str__())
 
         print(print_list)
 
