@@ -18,6 +18,7 @@ place_amenity = Table("place_amenity", Base.metadata,
                              nullable=False))
 
 
+
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
@@ -30,7 +31,7 @@ class Place(BaseModel, Base):
     max_guest = Column(Integer, nullable=False, default=0)
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float)
-    longitude =Column(Float)
+    longitude = Column(Float)
     amenity_ids = []
     
 
@@ -68,3 +69,5 @@ class Place(BaseModel, Base):
             """ Appends amenity ids to the attribute """
             if type(obj) is Amenity and obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
+=======
+>>>>>>> cfe874da7da4039f3b1936ee448a063731639cf2
