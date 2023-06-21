@@ -224,13 +224,13 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in objects.items():
+            for k in objects:
                 if k.split('.')[0] == args:
-                    print_list.append(str(v))
+                    print_list.append(objects[k].to_dict())
         else:
             objects = storage.all()
-            for k, v in objects.items():
-                print_list.append(str(v))
+            for k in objects:
+                print_list.append(objects[k].to_dict())
 
         print(print_list)
 
