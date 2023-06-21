@@ -3,9 +3,11 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from os import getenv
 
-class State(BaseModel):
-    """ State class 
+
+class State(BaseModel, Base):
+    """ State class
     Attributes:
         __tablename__: name of MySQL table
         name: input name
@@ -14,7 +16,7 @@ class State(BaseModel):
     name = Column(String(128), nullable=False)
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        cities = relationship('City', cascade='all delete', backref='states')
+        cities = relationship('City', cascade='all, delete', backref='states')
     else:
         @property
         def cities(self):
