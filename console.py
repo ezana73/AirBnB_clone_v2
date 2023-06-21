@@ -203,7 +203,8 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            all_objects = storage.all()
+            del all_objects[key]
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -218,7 +219,6 @@ class HBNBCommand(cmd.Cmd):
         print_list = []
 
         if args:
-            
             args = args.split(' ')[0]  # remove possible trailing args
             objects = storage.all(args)
             if args not in HBNBCommand.classes:
