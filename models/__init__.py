@@ -7,7 +7,7 @@ from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
-from models.place import Place
+from models.place import Place, place_amenity
 from models.review import Review
 from os import getenv
 

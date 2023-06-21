@@ -4,7 +4,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from os import getenv
-from models.city import City
 
 
 class State(BaseModel, Base):
@@ -22,6 +21,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             from models import storage
+            from models.city import City
             cityList = []
             cityDict = storage.all(City)
             for city in cityDict.values():

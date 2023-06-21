@@ -4,10 +4,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
-from models.review import Review
 from os import getenv
-import models
-from os import getenv
+
+metadata = Base.metadata
+place_amenity = Table('place_amenity', metadata,
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True,
+                             nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True,
+                             nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -26,14 +34,34 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        reviews = relationship('Review', cascade='all, delete', backref='place')
+        reviews = relationship('Review', cascade='all, delete',
+                               backref='place')
+        amenities = relationship('Amenity', secondary=place_amenity,
+                                 viewonly=False, backref='place')
     else:
         @property
         def reviews(self):
             from models import storage
+            from models.review import Review
             reviewList = []
             reviewDict = storage.all(Review)
             for review in reviewDict.values():
                 if review.place_id == self.id:
                     reviewList.append(review)
             return reviewList
+
+        @property
+        def amenities(self):
+            from models import storage
+            from models.amenity import Amenity
+            amenityList = []
+            for amenity in self.amenity_ids:
+                if amenity == self.id:
+                    amenityList.append(amenity)
+            return amenityList
+
+        @amenities.setter
+        def amenities(self, value):
+            if type(value) is object:
+                if value.__class__.__name__ == 'Amenity':
+                    self.amenity_ids.append(value.id)
