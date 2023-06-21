@@ -225,14 +225,13 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             for k in objects:
-                if k.split('.')[0] == args:
-                    print_list.append(objects[k].to_dict())
+                print_list.append(objects[k])
+            print(print_list)
         else:
             objects = storage.all()
             for k in objects:
-                print_list.append(objects[k].to_dict())
-
-        print(print_list)
+                print_list.append(objects[k])
+            print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
