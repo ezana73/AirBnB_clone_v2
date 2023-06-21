@@ -51,6 +51,11 @@ class BaseModel:
         from models import storage
         storage.delete(self)
 
+    def __repr__(self):
+        """return a string representaion
+        """
+        return self.__str__()
+
     def to_dict(self):
         """Convert instance into dict format"""
         dictionary = {}
