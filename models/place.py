@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 from models.review import Review
 from os import getenv
 import models
+from os import getenv
 
 
 class Place(BaseModel, Base):
