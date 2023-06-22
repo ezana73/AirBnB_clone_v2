@@ -12,7 +12,7 @@ Base = declarative_base()
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), nullable=False, unique=True,
-                primary_key=True)
+                 primary_key=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=created_at)
 
@@ -64,7 +64,6 @@ class BaseModel:
             del dictionary['_sa_instance_state']
         if getenv('HBNB_TYPE_STORAGE') == 'db':
             return dictionary
-        else:
-            dictionary['created_at'] = self.created_at.isoformat()
-            dictionary['updated_at'] = self.updated_at.isoformat()
-            return dictionary
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()
+        return dictionary
