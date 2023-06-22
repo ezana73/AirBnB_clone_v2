@@ -62,6 +62,8 @@ class BaseModel:
         dictionary.update(self.__dict__)
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            return dictionary
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
