@@ -37,8 +37,9 @@ class BaseModel:
 
     def __str__(self):
         """Returns a string representation of the instance"""
+
         return '[{}] ({}) {}'.format(self.__class__.__name__,
-                                     self.id, self.__dict__)
+                                     self.id, self.to_dict())
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
@@ -60,9 +61,11 @@ class BaseModel:
         """Convert instance into dict format"""
         dictionary = {}
         dictionary.update(self.__dict__)
-        if '_sa_instance_state' in dictionary:
+        if '_sa_instance_state' in dictionary.keys():
             del dictionary['_sa_instance_state']
         dictionary['__class__'] = str(type(self).__name__)
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            return dictionary
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
