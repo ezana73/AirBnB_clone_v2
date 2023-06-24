@@ -32,8 +32,8 @@ class FileStorage:
             for key in dictionary:
                 partition = key.replace('.', ' ')
                 partition = shlex.split(partition)
-                if (partition[0] == cls.__class__.__name__):
-                    dic[key] = self.__objects[key]
+                if (partition[0] == cls.__name__):
+                    dic[key] = self.__objects
             return (dic)
         else:
             return self.__objects
@@ -65,7 +65,7 @@ class FileStorage:
                     value = eval(value['__class__'])(**value)
                     self.__objects[key] = value
         except FileNotFoundError:
-           pass
+            pass
 
     def delete(self, obj=None):
         """ delete an existing element
@@ -77,4 +77,4 @@ class FileStorage:
     def close(self):
         """ calls reload()
         """
-        self.reload()
+        return self.reload()
