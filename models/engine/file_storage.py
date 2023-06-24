@@ -26,12 +26,13 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-
+        dic = {}
         if cls is not None:
             if type(cls) == str:
                 cls = eval(cls)
             new_dict = {}
             for key, value in self.__objects.items():
+                # if self.__class__.__name__ == cls:
                 if type(value) == cls:
                     new_dict[key] = value
             return new_dict
