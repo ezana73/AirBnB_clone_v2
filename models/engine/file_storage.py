@@ -26,12 +26,12 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
+
         if cls is not None:
             if type(cls) == str:
                 cls = eval(cls)
             new_dict = {}
             for key, value in self.__objects.items():
-                # if self.__class__.__name__ == cls:
                 if type(value) == cls:
                     new_dict[key] = value
             return new_dict
@@ -50,13 +50,11 @@ class FileStorage:
     def save(self):
         """serialize the file path to JSON file path
         """
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            json.dump(temp, f)
-
+        my_dict = {}
+        for key, value in self.__objects.items():
+            my_dict[key] = value.to_dict()
+        with open(self.__file_path, 'w', encoding="UTF-8") as f:
+            json.dump(my_dict, f)
 
     def reload(self):
         """serialize the file path to JSON file path
