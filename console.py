@@ -138,8 +138,8 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id)
         except SyntaxError:
             print("** class name missing **")
-        #except KeyError:
-        #    print("** class does'nt exist **")
+        except KeyError:
+            print("** class does'nt exist **")
 
     def help_create(self):
         """ Help information for the create method """
