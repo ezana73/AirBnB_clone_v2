@@ -116,27 +116,29 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """ Create an object of any class"""
         try:
-            if not args:
+            if not line:
                 raise SyntaxError()
-            arg_list = args.split(" ")
-            kw = {}
-            if arg_list:
-                cls_name = str(arg_list[0])
-            for arg in arg_list[1:]:
-                arg_splitted = arg.split("=")
-                arg_splitted[1] = eval(arg_splitted[1])
-                if type(arg_splitted[1]) is str:
-                    arg_splitted[1] = arg_splitted[1]\
-                                      .replace("_", " ").replace('"', '\"')
-                elif type(arg_splitted[1]) is float:
-                    arg_splitted[1] = float(arg_splitted[1])
-                elif type(arg_splitted[1]) is int:
-                    arg_splitted[1] = int(arg_splitted[1])
-                kw[arg_splitted[0]] = arg_splitted[1]
-            new_instance = HBNBCommand.classes[cls_name](**kw)
-            storage.new(new_instance)
-            new_instance.save()
-            print(new_instance.id)
+            my_list = line.split(" ")
+
+            kwargs = {}
+            for i in range(1, len(my_list)):
+                key, value = tuple(my_list[i].split("="))
+                if value[0] == '"':
+                    value = value.strip('"').replace("_", " ")
+                else:
+                    try:
+                        value = eval(value)
+                    except (SyntaxError, NameError):
+                        continue
+                kwargs[key] = value
+
+            if kwargs == {}:
+                obj = eval(my_list[0])()
+            else:
+                obj = eval(my_list[0])(**kwargs)
+                storage.new(obj)
+            print(obj.id)
+            obj.save()
         except SyntaxError:
            print("** class name missing **")
         except KeyError:
