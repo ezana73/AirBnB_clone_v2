@@ -12,16 +12,12 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 
-all_classes = {'State': State, 'City': City,
-               'User': User, 'Place': Place,
-               'Review': Review, 'Amenity': Amenity}
-
 
 class DBStorage:
     __engine = None
     __session = None
 
-    classes = [State, City]
+    classes = [State, City, Place, Amenity, Review, User]
     __user = getenv("HBNB_MYSQL_USER")
     __passwd = getenv("HBNB_MYSQL_PWD")
     __host = getenv("HBNB_MYSQL_HOST")
@@ -37,18 +33,17 @@ class DBStorage:
 
     def all(self, cls=None):
         """Query and return all objects or specify class"""
-        obj_dict = {}
+        dictionary = {}
         if cls:
-            for row in self.__session.query(cls).all():
-                # populate dict with objects from storage
-                obj_dict.update({'{}.{}'.
-                                format(type(cls).__name__, row.id,): row})
+            for obj in self.__session.query(eval(cls)).all():
+                key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                dictionary[key] = obj
         else:
-            for key, val in all_classes.items():
-                for row in self.__session.query(val):
-                    obj_dict.update({'{}.{}'.
-                                    format(type(row).__name__, row.id,): row})
-        return obj_dict
+            for modelClass in self.classes:
+                for obj in self.__session.query(modelClass).all():
+                    key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                    dictionary[key] = obj
+        return dictionary
 
     def new(self, obj):
         """Add object to current database session"""
