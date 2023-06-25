@@ -137,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
         except SyntaxError:
-            print("** class name missing **")
+           print("** class name missing **")
         except KeyError:
             print("** class does'nt exist **")
 
