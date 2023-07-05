@@ -47,7 +47,7 @@ package { 'nginx':
 
 -> file { '/data/web_static/releases/test/index.html':
   ensure  => 'present',
-  content => "this webpage is found in data/web_static/releases/test/index.htm \n"
+  content => "this webpage is found in data/web_static/releases/test/index.html \n"
 }
 
 -> file { '/data/web_static/current':
